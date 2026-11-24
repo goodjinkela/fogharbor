@@ -139,8 +139,9 @@ hvigorw --mode module -p product=default -p module=entry@default assembleHap
 
 ## 九、页面截图
 
-运行后把截图放进 `docs/screenshots/`，文件名与下表一致即可显示。
+> 运行后把截图放进 `docs/screenshots/`，取消下方注释即可在 README 中显示。
 
+<!--
 | 首页 | 故事页 | 结局 |
 | --- | --- | --- |
 | ![首页](docs/screenshots/01-home.png) | ![故事](docs/screenshots/02-story.png) | ![结局](docs/screenshots/03-ending.png) |
@@ -148,6 +149,7 @@ hvigorw --mode module -p product=default -p module=entry@default assembleHap
 | 存档 | 图鉴 | 回顾 |
 | --- | --- | --- |
 | ![存档](docs/screenshots/04-saves.png) | ![图鉴](docs/screenshots/05-gallery.png) | ![回顾](docs/screenshots/06-history.png) |
+-->
 
 ---
 

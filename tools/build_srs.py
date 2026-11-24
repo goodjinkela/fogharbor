@@ -289,8 +289,8 @@ def build_srs():
         ("选题方向", "主题一：交互式剧情探索与多分支决策系统"),
         ("开发形式", "独立完成"),
         ("学号姓名", "【填写学号 姓名】"),
-        ("GitHub 账号", "【填写本人 GitHub 账号】"),
-        ("仓库地址", "【填写仓库链接】"),
+        ("GitHub 账号", "goodjinkela"),
+        ("仓库地址", "https://github.com/goodjinkela/fogharbor"),
         ("开发环境", "DevEco Studio 5.0.13 / HarmonyOS SDK 5.0.5 (API 17)"),
     ])
 
