@@ -98,10 +98,6 @@ export struct HistoryPage {
                       .fontSize(10)
                       .fontColor(C.GOLD)
                       .backgroundColor('#1E1A0F')
-                    Row()
-                      .width(1)
-                      .layoutWeight(1)
-                      .backgroundColor(C.LINE)
                   }
                   .width(22)
                   .alignItems(HorizontalAlign.Center)

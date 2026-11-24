@@ -152,8 +152,11 @@ export struct StoryPage {
   StatsRow() {
     Row({ space: 14 }) {
       ForEach(this.view.stats, (item: StatView) => {
-        StatBar({ label: item.label, value: item.value, max: item.max, accent: item.accent })
-      }, (item: StatView) => item.key)
+        Column() {
+          StatBar({ label: item.label, value: item.value, max: item.max, accent: item.accent })
+        }
+        .layoutWeight(1)
+      }, (item: StatView) => `${item.key}-${item.value}`)
     }
     .width('100%')
     .padding({ left: 18, right: 18, top: 6, bottom: 10 })
@@ -312,7 +315,7 @@ export struct StoryPage {
                       this.pick(id);
                     }
                   })
-                }, (item: ChoiceView) => item.id)
+                }, (item: ChoiceView) => `${item.id}-${item.locked}`)
               }
               .width('100%')
               .transition(TransitionEffect.OPACITY.animation({ duration: 260, curve: Curve.EaseOut }))

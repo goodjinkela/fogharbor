@@ -224,8 +224,8 @@ def placeholder_box(doc, text, height_cm=6.0):
     doc.add_paragraph().paragraph_format.space_after = Pt(2)
 
 
-def add_image(doc, filename, width_cm=15.5, caption=None):
-    path = os.path.join(OUT_DIR, "docs", "images", filename)
+def add_image(doc, filename, width_cm=15.5, caption=None, subdir="images"):
+    path = os.path.join(OUT_DIR, "docs", subdir, filename)
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(6)
@@ -237,6 +237,29 @@ def add_image(doc, filename, width_cm=15.5, caption=None):
         cap.paragraph_format.space_after = Pt(10)
         r = cap.add_run(caption)
         set_run_font(r, "楷体", 9, color=RGBColor(0x55, 0x55, 0x55))
+
+
+def screenshot_grid(doc, items, width_cm=4.9, cols=2):
+    """把截图两两并排放在同一段落里，避免表格边框，同时控制篇幅。"""
+    for start in range(0, len(items), cols):
+        row_items = items[start:start + cols]
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.paragraph_format.space_before = Pt(6)
+        p.paragraph_format.space_after = Pt(2)
+        p.paragraph_format.line_spacing = 1.0
+        for idx, item in enumerate(row_items):
+            if idx > 0:
+                p.add_run("      ")
+            p.add_run().add_picture(os.path.join(OUT_DIR, "docs", "screenshots", item[0]),
+                                    width=Cm(width_cm))
+        cap = doc.add_paragraph()
+        cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        cap.paragraph_format.space_before = Pt(0)
+        cap.paragraph_format.space_after = Pt(10)
+        cap.paragraph_format.line_spacing = 1.0
+        r = cap.add_run("　　".join(item[1] for item in row_items))
+        set_run_font(r, "楷体", 8, color=RGBColor(0x55, 0x55, 0x55))
 
 
 def cover(doc, title, subtitle, meta_rows):

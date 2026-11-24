@@ -213,7 +213,7 @@ export struct SavesPage {
           Column({ space: 12 }) {
             ForEach(this.slots, (item: SaveSlotView) => {
               this.SlotCard(item)
-            }, (item: SaveSlotView) => `${item.slot}`)
+            }, (item: SaveSlotView) => `${item.slot}-${item.exists}-${item.savedAt}`)
 
             Text('提示：应用被关闭或杀死后重新打开，会自动恢复到最近的进度。')
               .fontSize(11)

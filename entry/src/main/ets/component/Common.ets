@@ -91,7 +91,7 @@ export struct ChoiceCard {
       .alignItems(HorizontalAlign.Start)
     }
     .width('100%')
-    .padding({ left: 14, right: 14, top: 14, bottom: 14 })
+    .padding({ left: 14, right: 14, top: 12, bottom: 12 })
     .borderRadius(16)
     .backgroundColor(this.locked ? C.CARD : C.CARD_HI)
     .border({ width: 1, color: this.locked ? C.LINE : '#2A3644' })

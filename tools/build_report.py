@@ -7,7 +7,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Cm, Pt, RGBColor
 
 from build_srs import (OUT_DIR, add_image, add_table, body, bullet, code_block, cover,
-                       init_document, note, placeholder_box, set_run_font)
+                       init_document, note, screenshot_grid, set_run_font)
 
 
 def build_report():
@@ -24,8 +24,8 @@ def build_report():
         ("开发环境", "DevEco Studio 5.0.13 / HarmonyOS SDK 5.0.5 (API 17)"),
     ])
 
-    note(doc, "填写说明：把文中所有【】替换为你的真实信息；第 6.1 节的截图在模拟器跑通后补入；"
-              "附录 A 的 commit 哈希用 git log 复制。其余内容已按本项目实际代码写好，可按你的表达习惯调整。")
+    note(doc, "填写说明：把文中所有【】替换为你的真实信息；截图已从模拟器实机截取并嵌入 6.1，"
+              "如需替换直接覆盖 docs/screenshots 下的同名文件后重新生成即可。")
 
     doc.add_heading("一、项目基本信息", level=1)
     add_table(doc,
@@ -259,14 +259,17 @@ def build_report():
     doc.add_heading("六、运行结果与总结", level=1)
 
     doc.add_heading("6.1 主要页面", level=2)
-    note(doc, "截图建议：模拟器窗口用 Win+Alt+R 录屏、Win+Shift+S 截图，或 DevEco 的 Screenshot 按钮。")
-
-    placeholder_box(doc, "【截图 1：首页（继续调查 / 开始调查 / 入口菜单）】", 6.2)
-    placeholder_box(doc, "【截图 2：故事页（章节、属性条、打字机文本、选项）】", 6.2)
-    placeholder_box(doc, "【截图 3：锁定选项（灰色 + 需要 线索 ≥ 4）】", 6.2)
-    placeholder_box(doc, "【截图 4：结局面板（评级、标题、描述）】", 6.2)
-    placeholder_box(doc, "【截图 5：存档页（自动 + 3 手动）】", 6.2)
-    placeholder_box(doc, "【截图 6：结局图鉴（已解锁 / 未解锁）】", 6.2)
+    body(doc, "以下截图均在本地模拟器 Huawei_Phone（HarmonyOS 5.0.5，1260×2720）上实际运行截取，"
+              "机型与分辨率信息见 5.1 节。")
+    screenshot_grid(doc, [
+        ("01-home.png", "图 6-1 首页：开始 / 继续、读档与入口菜单"),
+        ("02-story.png", "图 6-2 故事页：章节、属性条、打字机文本"),
+        ("03-locked.png", "图 6-3 条件选项：线索不足时置灰并提示"),
+        ("04-ending.png", "图 6-4 结局：S 级「雾散」"),
+        ("05-saves.png", "图 6-5 存档：自动存档 + 3 个手动位"),
+        ("06-gallery.png", "图 6-6 结局图鉴：1 / 5 已解锁")
+    ])
+    add_image(doc, "07-history.png", 6.4, "图 6-7 剧情回顾：本局 10 次决策与属性变化", "screenshots")
 
     doc.add_heading("6.2 集成结果", level=2)
     body(doc, "六个页面均通过 Navigation 串联，业务状态由 GameService 统一持有；选择后自动存档、"

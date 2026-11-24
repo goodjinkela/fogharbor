@@ -103,23 +103,31 @@ FogHarbor/
 
 ## 七、运行方式
 
-1. DevEco Studio → `File > Open`，选择本工程根目录（含 `build-profile.json5` 的目录）。
-2. 等待 Sync 完成。
-3. 配置签名：`File > Project Structure > Project > Signing Configs`，勾选 **Automatically generate signature**（需登录华为账号并完成实名）。
-4. `Tools > Device Manager > Local Emulator`，启动 `Huawei_Phone`。
-5. 选择模块 `entry`，点击 ▶ Run。
-
-命令行构建（可选）：
+**方式 A：命令行安装（无需华为账号）** —— 本机模拟器实测可行：
 
 ```powershell
+# 1. 启动模拟器（DevEco 的 Device Manager 里点启动，或直接命令行）
+& 'D:\HUAWEI\DevEco Studio\tools\emulator\Emulator.exe' -hvd Huawei_Phone -path D:/HUAWEISimulator -imageRoot D:/HUAWEISimulator/sdk
+
+# 2. 构建 + 安装 + 启动
 $env:JAVA_HOME='D:\HUAWEI\DevEco Studio\jbr'
 $env:NODE_HOME='D:\HUAWEI\DevEco Studio\tools\node'
 $env:PATH="$env:JAVA_HOME\bin;$env:NODE_HOME;$env:PATH"
 $env:DEVECO_SDK_HOME='D:\HUAWEI\DevEco Studio\sdk'
 hvigorw --mode module -p product=default -p module=entry@default assembleHap
+
+hdc install entry\build\default\outputs\default\entry-default-unsigned.hap
+hdc shell aa start -a EntryAbility -b com.goodjinkela.fogharbor
 ```
 
-> 当前状态：`assembleHap` 构建通过（`BUILD SUCCESSFUL`，产出未签名 HAP）。签名与真机/模拟器安装需在 DevEco 中登录华为账号完成。
+**方式 B：DevEco Studio 运行**：
+
+1. `File > Open` 选择工程根目录，等待 Sync。
+2. `Tools > Device Manager > Local Emulator` 启动 `Huawei_Phone`。
+3. 选择模块 `entry`，点击 ▶ Run（如提示签名，可勾选自动签名；也可直接用方式 A）。
+4. 配置签名：`File > Project Structure > Project > Signing Configs` → **Automatically generate signature**。
+
+> 已验证：`assembleHap` 构建通过，未签名 HAP 可在本机 API 17 模拟器上直接安装运行（2026-11-24 实测）。
 
 ---
 
@@ -139,17 +147,19 @@ hvigorw --mode module -p product=default -p module=entry@default assembleHap
 
 ## 九、页面截图
 
-> 运行后把截图放进 `docs/screenshots/`，取消下方注释即可在 README 中显示。
+均在本地模拟器 Huawei_Phone（HarmonyOS 5.0.5，1260×2720）实机运行截取。
 
-<!--
-| 首页 | 故事页 | 结局 |
+| 首页 | 故事页 | 条件选项 |
 | --- | --- | --- |
-| ![首页](docs/screenshots/01-home.png) | ![故事](docs/screenshots/02-story.png) | ![结局](docs/screenshots/03-ending.png) |
+| ![首页](docs/screenshots/01-home.png) | ![故事](docs/screenshots/02-story.png) | ![锁定](docs/screenshots/03-locked.png) |
 
-| 存档 | 图鉴 | 回顾 |
+| 结局（S 级） | 存档 | 结局图鉴 |
 | --- | --- | --- |
-| ![存档](docs/screenshots/04-saves.png) | ![图鉴](docs/screenshots/05-gallery.png) | ![回顾](docs/screenshots/06-history.png) |
--->
+| ![结局](docs/screenshots/04-ending.png) | ![存档](docs/screenshots/05-saves.png) | ![图鉴](docs/screenshots/06-gallery.png) |
+
+| 剧情回顾 |
+| --- |
+| ![回顾](docs/screenshots/07-history.png) |
 
 ---
 

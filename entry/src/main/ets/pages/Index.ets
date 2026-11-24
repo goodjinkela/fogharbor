@@ -60,6 +60,19 @@ struct Index {
     this.stack.pushPathByName('Story', null);
   }
 
+  private showAbout(): void {
+    AlertDialog.show({
+      title: '关于《雾港回声》',
+      message: '版本 1.0.0\n交互式剧情探索与多分支决策应用\nArkTS · ArkUI · preferences\n《移动应用开发基础》期末大作业',
+      autoCancel: true,
+      confirm: {
+        value: '知道了',
+        action: () => {
+        }
+      }
+    });
+  }
+
   @Builder
   TitleBlock() {
     Column({ space: 10 }) {
@@ -133,21 +146,25 @@ struct Index {
           colors: [['#05070A', 0], ['#0C141E', 0.5], ['#070A0F', 1]]
         })
 
-      Circle()
-        .width(340)
-        .height(340)
-        .fill('#16283A')
-        .opacity(0.55)
-        .blur(70)
-        .position({ x: -90, y: -110 })
+      Column()
+        .width(880)
+        .height(880)
+        .radialGradient({
+          center: ['50%', '50%'],
+          radius: '50%',
+          colors: [['#1C3244', 0], ['#101C28', 0.55], ['#00000000', 1]]
+        })
+        .position({ x: -240, y: -420 })
 
-      Circle()
-        .width(260)
-        .height(260)
-        .fill('#241E10')
-        .opacity(0.5)
-        .blur(80)
-        .position({ x: 240, y: 520 })
+      Column()
+        .width(760)
+        .height(760)
+        .radialGradient({
+          center: ['50%', '50%'],
+          radius: '50%',
+          colors: [['#2B2311', 0], ['#00000000', 1]]
+        })
+        .position({ x: 200, y: 760 })
 
       Scroll() {
         Column({ space: 16 }) {
@@ -224,7 +241,7 @@ struct Index {
                 badge: '关',
                 title: '关于本作',
                 subtitle: '《移动应用开发基础》期末大作业',
-                onTap: () => this.stack.pushPathByName('Settings', null)
+                onTap: () => this.showAbout()
               })
             }
             .width('100%')
