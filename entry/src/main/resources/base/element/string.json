@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "交互式剧情探索与多分支决策应用"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "雾港回声主入口"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "雾港回声"
+    }
+  ]
+}

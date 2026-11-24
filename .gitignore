@@ -1,0 +1,23 @@
+﻿# Build outputs
+/build/
+/entry/build/
+/.hvigor/
+/.idea/
+/.preview/
+/entry/.preview/
+
+# Dependencies
+/oh_modules/
+/entry/oh_modules/
+node_modules/
+
+# Signing materials
+*.p12
+*.cer
+*.pem
+*.jks
+/local.properties
+
+# OS
+.DS_Store
+Thumbs.db
