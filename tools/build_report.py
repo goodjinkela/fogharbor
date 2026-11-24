@@ -198,16 +198,17 @@ def build_report():
                "this.applyEndingState();  // 打字机 / 结局面板")
 
     doc.add_heading("4.5 Commit 记录", level=2)
-    body(doc, "下表从 git log 复制，需与仓库实际提交一致；评审会按哈希核对。")
+    body(doc, "下表为仓库真实提交，可用 git log 核对；后续开发请按功能继续拆分提交。")
     add_table(doc,
               ["日期", "哈希", "说明", "涉及文件"],
               [
                   ["2026-11-24", "bfca1ee", "feat(core): 初始化《雾港回声》工程与剧情引擎", "全部工程文件"],
-                  ["【日期】", "【哈希】", "feat(rule): 规则引擎与结局裁定", "StoryEngine.ets"],
-                  ["【日期】", "【哈希】", "feat(save): 存档读写与恢复", "SaveRepository.ets"],
-                  ["【日期】", "【哈希】", "test(rule): 补充正常 / 边界 / 异常用例", "StoryEngine.test.ets"],
+                  ["2026-11-24", "688c243", "docs: 补充需求说明书、报告模板、架构图与开发指南", "docs/、tools/"],
+                  ["2026-11-24", "7727528", "feat(ui): 替换为《雾港回声》应用图标", "media/background.png、foreground.png"],
+                  ["2026-11-24", "6941ca0", "docs: 补充仓库信息并整理 README 截图占位", "README.md"],
+                  ["2026-11-24", "03122c7", "fix(ui): 修复属性条不刷新与时间线撑满，补充实机截图", "StoryPage、SavesPage、HistoryPage 等"],
               ],
-              widths=[3.0, 2.6, 7.4, 4.5], size=8.5)
+              widths=[2.8, 2.4, 7.6, 4.7], size=8.5)
 
     doc.add_heading("五、模块测试", level=1)
 
