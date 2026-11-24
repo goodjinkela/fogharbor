@@ -10,7 +10,7 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
-OUT_DIR = os.path.dirname(os.path.abspath(__file__))
+OUT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BODY_FONT = "宋体"
 HEAD_FONT = "黑体"
 MONO_FONT = "Consolas"
@@ -222,6 +222,21 @@ def placeholder_box(doc, text, height_cm=6.0):
     r = p.add_run(text)
     set_run_font(r, "楷体", 9.5, color=RGBColor(0x99, 0x99, 0x99))
     doc.add_paragraph().paragraph_format.space_after = Pt(2)
+
+
+def add_image(doc, filename, width_cm=15.5, caption=None):
+    path = os.path.join(OUT_DIR, "docs", "images", filename)
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(6)
+    p.paragraph_format.space_after = Pt(4)
+    p.add_run().add_picture(path, width=Cm(width_cm))
+    if caption:
+        cap = doc.add_paragraph()
+        cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        cap.paragraph_format.space_after = Pt(10)
+        r = cap.add_run(caption)
+        set_run_font(r, "楷体", 9, color=RGBColor(0x55, 0x55, 0x55))
 
 
 def cover(doc, title, subtitle, meta_rows):
@@ -457,21 +472,7 @@ def build_srs():
 
     doc.add_heading("4.1 分层架构", level=2)
     body(doc, "系统采用五层结构，上层依赖下层，下层不感知上层，保证业务逻辑可独立测试。")
-    code_block(doc,
-               "┌──────────────────────────────────────────────┐\n"
-               "│ 表现层  pages/Index · StoryPage · SavesPage   │\n"
-               "│         GalleryPage · HistoryPage · Settings  │\n"
-               "├──────────────────────────────────────────────┤\n"
-               "│ 组件层  component/Common（StatBar / ChoiceCard │\n"
-               "│         / MenuRow）· common/Theme（视觉规范）  │\n"
-               "├──────────────────────────────────────────────┤\n"
-               "│ 服务层  service/GameService（单例，编排）      │\n"
-               "├──────────────────────────────────────────────┤\n"
-               "│ 领域层  domain/StoryEngine（条件 / 结算 / 结局）│\n"
-               "│         model/Types · StoryData · GameState   │\n"
-               "├──────────────────────────────────────────────┤\n"
-               "│ 数据层  data/SaveRepository → preferences     │\n"
-               "└──────────────────────────────────────────────┘")
+    add_image(doc, "architecture.png", 15.6, "图 4-1 系统分层架构（本人负责全部模块）")
 
     doc.add_heading("4.2 模块职责", level=2)
     add_table(doc,
@@ -692,13 +693,7 @@ def build_srs():
               widths=[3.0, 5.2, 7.3], size=8.5)
 
     doc.add_heading("8.2 导航关系", level=2)
-    code_block(doc,
-               "首页 ──开始/继续──▶ 故事页 ──存档──▶ 存档页（save）\n"
-               "  │                    │──回顾──▶ 剧情回顾\n"
-               "  │                    └──结局──▶ 结局图鉴\n"
-               "  ├──读档──▶ 存档页（load）──读取──▶ 故事页\n"
-               "  ├──图鉴──▶ 结局图鉴\n"
-               "  └──设置──▶ 设置页")
+    add_image(doc, "navigation.png", 15.2, "图 8-1 页面导航关系")
 
     doc.add_heading("8.3 视觉规范", level=2)
     add_table(doc,
@@ -782,3 +777,7 @@ def build_srs():
     os.makedirs(os.path.dirname(path), exist_ok=True)
     doc.save(path)
     return path
+
+
+if __name__ == '__main__':
+    print(build_srs())
